@@ -4,7 +4,7 @@
   "description": "Scaffold a new MCP server with InstaCode's conventions",
   "type": "module",
   "bin": {
-    "create-mcp-server": "./index.mjs"
+    "create-mcp-server": "index.mjs"
   },
   "files": [
     "index.mjs",
