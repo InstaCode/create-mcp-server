@@ -1,0 +1,38 @@
+{
+  "name": "@instacodeio/create-mcp-server",
+  "version": "0.1.0",
+  "description": "Scaffold a new MCP server with InstaCode's conventions",
+  "type": "module",
+  "bin": {
+    "create-mcp-server": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "template",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "template",
+    "scaffold",
+    "create"
+  ],
+  "author": "Jason Edstrom <jason@instacode.io>",
+  "license": "MIT",
+  "homepage": "https://github.com/InstaCode/create-mcp-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InstaCode/create-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/InstaCode/create-mcp-server/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

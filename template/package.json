@@ -1,0 +1,53 @@
+{
+  "name": "__PKG_NAME__",
+  "version": "0.1.0",
+  "description": "__DESCRIPTION__",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "__BIN_NAME__": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol"
+  ],
+  "author": "__AUTHOR_NAME__ <__AUTHOR_EMAIL__>",
+  "license": "MIT",
+  "homepage": "https://github.com/__REPO_OWNER__/__REPO_NAME__#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/__REPO_OWNER__/__REPO_NAME__.git"
+  },
+  "bugs": {
+    "url": "https://github.com/__REPO_OWNER__/__REPO_NAME__/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

@@ -1,0 +1,6 @@
+# Add the env vars your server needs here.
+# Use src/env.ts -> getRequiredEnv("NAME") to read them with a
+# friendly error message on missing values.
+#
+# Example:
+# API_KEY=your-key-here
