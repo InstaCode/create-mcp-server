@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  scaffold-and-test:
+    name: Scaffold and verify (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['22', '24']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Scaffold a test project
+        run: |
+          node ./index.mjs /tmp/test-mcp \
+            --no-prompt \
+            --bin test-mcp-server \
+            --description "CI scaffold test" \
+            --repo-name test-mcp-server
+
+      - name: Install scaffolded project
+        working-directory: /tmp/test-mcp
+        run: npm install
+
+      - name: Typecheck
+        working-directory: /tmp/test-mcp
+        run: npm run typecheck
+
+      - name: Build
+        working-directory: /tmp/test-mcp
+        run: npm run build
+
+      - name: Smoke test (server starts and registers expected tools)
+        working-directory: /tmp/test-mcp
+        run: |
+          OUTPUT=$( (
+            echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"ci","version":"1.0"}}}'
+            sleep 0.3
+            echo '{"jsonrpc":"2.0","method":"notifications/initialized"}'
+            sleep 0.3
+            echo '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+            sleep 0.3
+          ) | timeout 5 node dist/index.js 2>/dev/null )
+
+          MISSING=()
+          while IFS= read -r tool; do
+            [ -z "$tool" ] && continue
+            if ! echo "$OUTPUT" | grep -q "\"$tool\""; then
+              MISSING+=("$tool")
+            fi
+          done < <(node -e "console.log(require('./.github/expected-tools.json').join('\n'))")
+
+          if [ ${#MISSING[@]} -gt 0 ]; then
+            echo "FAIL: missing tools in tools/list response:"
+            printf '  - %s\n' "${MISSING[@]}"
+            exit 1
+          fi
+          echo "All expected tools registered."
