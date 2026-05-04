@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.{{githubOwner}}/{{packageName}}",
+  "description": "{{description}}",
+  "version": "{{version}}",
+  "repository": {
+    "url": "https://github.com/{{githubOwner}}/{{packageName}}",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registry_type": "npm",
+      "identifier": "{{npmScope}}/{{packageName}}",
+      "version": "{{version}}",
+      "transport": {
+        "type": "stdio"
+      },
+      "runtime_hint": "npx",
+      "environment_variables": []
+    }
+  ]
+}
